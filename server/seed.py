@@ -1,5 +1,5 @@
 from app import app
-from models import db, User, Sticker
+from models import db, User, Purchase, Item
 from faker import Faker
 from random import randint, choice
 
@@ -10,7 +10,6 @@ if __name__ == '__main__':
         print("Seeding database...")
         
         User.query.delete()
-        Sticker.query.delete()
         
         users = []
         

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import '../public/style.scss'
 
 function Navbar() {
     return (
@@ -14,6 +15,9 @@ function Navbar() {
             </Link>
             <Link to='/shop'>
                 <h3>Point Shop</h3>
+            </Link>
+            <Link to='/inventory'>
+                <h3>Inventory</h3>
             </Link>
         </div>
     )

@@ -1,16 +1,22 @@
-import { useEffect } from "react"
+import { useEffect,useState } from "react"
+import ItemCard from "./ItemCard"
 
 function Shop() {
 
-    const [stickers, setStickers] = useState([])
+    const [items, setItems] = useState([])
 
     useEffect(() => {
-        fetch()
+        fetch('api/items')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            setItems(data)
+        })
     }, [])
 
     return (
         <>
-            <h3>The Shop</h3>
+            {items.map(item => <ItemCard key={item.id} item={item}/>)}
         </>
     )
 }

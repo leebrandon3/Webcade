@@ -19,18 +19,31 @@ class User(db.Model, SerializerMixin):
     _hashed_password = db.Column(db.String)
     age = db.Column(db.Integer, nullable=False)
     points = db.Column(db.Integer, default=0)
-    stickers = db.relationship('Sticker', back_populates='user')
+    purchases = db.relationship('Purchase', back_populates='user')
     
-    serialize_rules = ['-stickers.user']
+    serialize_rules = ['-purchases.user']
 
-class Sticker(db.Model, SerializerMixin):
+class Item(db.Model, SerializerMixin):
     
-    __tablename__ = 'stickers_table'
+    __tablename__ = 'items_table'
     
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    img_url = db.Column(db.String, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users_table.id'))
-    user = db.relationship('User', back_populates='stickers')
+    title = db.Column(db.String, nullable=False)
+    path = db.Column(db.String, nullable=False)
+    price = db.Column(db.Integer)
+    purchases = db.relationship('Purchase', back_populates='item')
     
-    serialize_rules = ['-user.stickers']
+    serialize_rules = ['-purchases.item']
+
+class Purchase(db.Model, SerializerMixin):
+    
+    __tablename__ = 'purchase_table'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('users_table.id'))
+    user = db.relationship('User', back_populates='purchases')
+    item_id = db.Column(db.Integer, db.ForeignKey('items_table.id'))
+    item = db.relationship('Item', back_populates='purchases')
+    
+    serialize_rules = ['-user.purchases', '-item.purchases']
