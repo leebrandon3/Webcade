@@ -4,8 +4,9 @@ from flask import Flask, request, jsonify, session, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
+from sqlalchemy import and_
 
-from models import db, User, Sticker
+from models import db, User, Item, Purchase
 
 from dotenv import load_dotenv
 
@@ -18,8 +19,12 @@ app = Flask(
     template_folder='../dist'
 )
 app.secret_key = os.environ.get('SECRET_KEY')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+if os.environ.get('ENV') == 'prod':
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
 CORS(app)
@@ -39,10 +44,11 @@ def not_found(e):
 # Signup
 @app.post('/api/users')
 def create_user():
+    print(User)
     try:
         new_user = User(
-            username=request.json['username'],
-            age=request.json['age']
+            username=request.json.get("username"),
+            age=request.json.get('age')
             )
         new_user._hashed_password = bcrypt.generate_password_hash(request.json['password']).decode('utf=8')
         db.session.add(new_user)
@@ -77,6 +83,64 @@ def login():
 def logout():
     session.pop('user_id')
     return {}, 204
+
+######################### SCORE ############################
+
+# Update users scores
+@app.patch('/api/score')
+def post_score():
+    user = User.query.where(User.id == session.get('user_id')).first()
+    if user:
+        if request.json.get('points'):
+            setattr(user, 'points', user.points + request.json.get('points'))
+            db.session.add(user)
+            db.session.commit()
+            return user.to_dict(), 201
+    else:
+        return {}, 204
+
+######################### ITEMS ############################
+
+# get all items
+@app.get('/api/items')
+def get_all_items():
+    all_items = Item.query.all()
+    return [item.to_dict() for item in all_items], 200
+
+# Purchase item
+@app.post('/api/purchase')
+def purchase_item():
+    user = User.query.where(User.id == session.get('user_id')).first()
+    if user:
+        already_purchased = Purchase.query.where(
+            and_(Purchase.user_id == session.get('user_id'),
+                Purchase.item_id == request.json.get('item_id')
+            )).first()
+        print(already_purchased)
+        
+        if (already_purchased == None):
+            print("creating purchase")
+            purchased_item = Purchase(
+                user_id=session.get('user_id'),
+                item_id=request.json.get('item_id')
+            )
+            db.session.add(purchased_item)
+            db.session.commit()
+            
+            user.points -= request.json.get('cost')
+            db.session.add(user)
+            db.session.commit()
+            
+            return purchased_item.to_dict(), 201
+        else:
+            return {'error': 'Already Purchased!'}, 400
+
+# Get all users items
+@app.get('/api/purchase')
+def get_all_users_items():
+    user = User.query.where(User.id == session.get('user_id')).first()
+    if user:
+        return [item.to_dict() for item in Purchase.query.where(Purchase.user_id == session.get('user_id'))], 200
 
 if __name__ == '__main__':
     app.run(port=8080, debug=True)

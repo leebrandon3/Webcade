@@ -1,0 +1,13 @@
+.container {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-col-span-3 {
+    grid-column: span 3;
+}
+
+.title {
+    text-align: center;
+}
