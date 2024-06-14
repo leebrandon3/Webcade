@@ -22,7 +22,7 @@ const routes = [
             },
             {
                 path: 'game',
-                element: <Game />
+                element: <Game />,
             },
             {
                 path: 'casino',
