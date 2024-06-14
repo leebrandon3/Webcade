@@ -10,6 +10,7 @@ import TestGame from './games/AnotherGame/TestGame.jsx';
 import FlappyBird from './games/FlappyBird/FlappyBird.jsx'
 import Blackjack from './casino games/Blackjack.jsx';
 import Inventory from './inventory components/Inventory.jsx';
+import CasinoNav from './casino components/CasinoNav.jsx';
 
 const routes = [
     {
@@ -22,11 +23,35 @@ const routes = [
             },
             {
                 path: 'game',
-                element: <Game />
+                element: <Game />,
+                children: [
+                    {
+                        index: true,
+                        element: <Home />
+                    },
+                    {
+                        path: 'testgame',
+                        element: <TestGame />
+                    },
+                    {
+                        path: 'flappybird',
+                        element: <FlappyBird />
+                    }
+                ]
             },
             {
                 path: 'casino',
-                element: <Casino />
+                element: <Casino />,
+                children: [
+                    {
+                        index: true,
+                        element: <CasinoNav />
+                    },
+                    {
+                        path: 'blackjack',
+                        element: <Blackjack />
+                    }
+                ]
             },
             {
                 path: 'shop',
@@ -35,18 +60,6 @@ const routes = [
             {
                 path: 'inventory',
                 element: <Inventory />
-            },
-            {
-                path: 'testgame',
-                element: <TestGame />
-            },
-            {
-                path: 'flappybird',
-                element: <FlappyBird />
-            },
-            {
-                path: 'blackjack',
-                element: <Blackjack />
             }
         ]
     }

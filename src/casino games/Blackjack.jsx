@@ -100,6 +100,18 @@ function Blackjack() {
 
                 this.playerScore = this.add.text(100, 400, `Hand Value: ${this.playerValue}`)
                 this.dealerScore = this.add.text(100, 100, `Hand Value: ${this.dealerValue}`)
+
+                const hitButton = this.add.text(500, 400, 'Hit')
+                .setInteractive()
+                .on('pointerdown', () => {
+                    this.deal(this.player)
+                })
+
+                const standButton = this.add.text(700, 400, 'Stand')
+                .setInteractive()
+                .on('pointerdown', () => {
+                    // TODO press stand logic
+                })
                 
                 this.deal(this.player)
                 this.deal(this.dealer)
@@ -112,8 +124,12 @@ function Blackjack() {
                 fetch(`https://www.deckofcardsapi.com/api/deck/${this.deckID}/draw/?count=1`)
                 .then(res => res.json())
                 .then(data => {
+                    let dataCardValue = data.cards[0].value
+                    if (dataCardValue == 'ACE') {
+                        dataCardValue = 'HACE'
+                    }
                     // passes down an array of cards
-                    const cardX = 100 + (hand.length * 110)
+                    const cardX = 100 + (hand.length * 50)
                     let cardY, currentHand, currentValue, currentScore
                     if (hand == this.player) {
                         cardY = 500
@@ -127,37 +143,62 @@ function Blackjack() {
                         currentValue = this.dealerValue
                         currentScore = this.dealerScore
                     }
-                    currentValue = 0
-                    currentHand.push(data.cards[0].value)
-                    currentHand.forEach(cardValue => {
-                        let value
-                        console.log(cardValue)
-                        switch (cardValue) {
-                            case 'ACE':
-                                value = 11
-                                break;
-                            case ('JACK'):
-                                value = 10
-                                break;
-                            case ('QUEEN'):
-                                value = 10
-                                break;
-                            case ('KING'):
-                                value = 10
-                                break;
-                            default:
-                                value = parseInt(cardValue)
-                                break;
-                        }
-                        // console.log(value)
-                        currentValue += value
-                    })
+                    currentHand.push(dataCardValue)
+                    currentValue = this.checkValue(currentHand)
+
+                    // Ace value logic
+                    while (currentValue > 21 && currentHand.includes('HACE')) {
+                        const aceIndex = currentHand.indexOf('HACE')
+                        currentHand[aceIndex] = 'LACE'
+                        currentValue = this.checkValue(currentHand)
+                    }
+                    if (currentValue > 21 && !currentHand.includes('HACE')){
+                        console.log('bust!')
+                    }
+
                     currentScore.setText(`Hand Value: ${currentValue}`)
                     const card = this.add.sprite(cardX, cardY, data.cards[0].code)
                     card.name = data.cards[0].code
                     hand.push(card)
                 })
             }
+
+            checkValue (currentHand) {
+                let currentValue = 0
+                currentHand.forEach(cardValue => {
+                    let value
+                    switch (cardValue) {
+                        case 'HACE':
+                            value = 11
+                            break;
+                        case 'LACE':
+                            value = 1
+                            break;
+                        case ('JACK'):
+                            value = 10
+                            break;
+                        case ('QUEEN'):
+                            value = 10
+                            break;
+                        case ('KING'):
+                            value = 10
+                            break;
+                        default:
+                            value = parseInt(cardValue)
+                            break;
+                    }
+                    currentValue += value
+                })
+                return currentValue
+            }
+
+            // hiddenDeal(hand){
+            //     fetch(`https://www.deckofcardsapi.com/api/deck/${this.deckID}/draw/?count=1`)
+            //     .then(res => res.json())
+            //     .then(data => {
+                    
+            //     })
+            // }
         }
 
         var config = {

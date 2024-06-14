@@ -1,18 +1,41 @@
 import { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Outlet } from "react-router-dom"
 
 function Casino() {
     return (
-        <>
-            <h3>Casino!</h3>
-            <div id="casino">
-                <Link to={'/blackjack'}>
-                    <div>
-                        <h5>Blackjack</h5>
-                    </div>
-                </Link>
+        <div className='arcade-machine'>
+            <div className='shadow'>
             </div>
-        </>
+            <div className='top'>
+                <div className='stripes'>
+                </div>
+            </div>
+            <div className='screen-container'>
+                <div className='shadow'>
+                </div>
+                <div className='screen' id='casino'>
+
+                    <Outlet className='screen-display'/>
+
+                </div>
+                <div className='joystick'>
+                    <div className='stick'>
+                    </div>
+                </div>
+            </div>
+            <div className='board'>
+                <div className='button button-a'>
+                </div>
+                <div className='button button-b'>
+                </div>
+                <div className='button button-c'>
+                </div>
+            </div>
+            <div className='bottom'>
+                <div className='stripes'>
+                </div>
+            </div>
+        </div>
     )
 }
 
