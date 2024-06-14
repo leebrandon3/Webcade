@@ -192,13 +192,13 @@ function Blackjack() {
                 return currentValue
             }
 
-            // hiddenDeal(hand){
-            //     fetch(`https://www.deckofcardsapi.com/api/deck/${this.deckID}/draw/?count=1`)
-            //     .then(res => res.json())
-            //     .then(data => {
+            hiddenDeal(hand){
+                fetch(`https://www.deckofcardsapi.com/api/deck/${this.deckID}/draw/?count=1`)
+                .then(res => res.json())
+                .then(data => {
                     
-            //     })
-            // }
+                })
+            }
         }
 
         var config = {
@@ -209,6 +209,7 @@ function Blackjack() {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
+            backgroundColor: '#35654d',
             scene: Scene,
             parent: "blackjack"
         }
