@@ -12,11 +12,11 @@ function Home(){
     // }, [currentUser.points])
 
     return (
-        <>
+        <div>
             <h1>Welcome {currentUser ? `${currentUser.username}!` : 'to WEBCADE!'}</h1>
             <SignedIn user={currentUser} setCurrentUser={setCurrentUser}/>
             <Login user={currentUser} setCurrentUser={setCurrentUser}/>
-        </>
+        </div>
     )
 }
 

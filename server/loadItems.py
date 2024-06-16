@@ -12,18 +12,18 @@ if __name__ == '__main__':
         # loads
         i0 = Item(
             title = 'Gudetama Thinking',
-            path = 'public/assets/Shop/GudetamaPack/gudetama-1.jpeg',
+            path = 'public/assets/Shop/GudetamaPack/gudetama-1.png',
             price = 10
         )
         items.append(i0)
         i1 = Item(
-            title = 'Gudetama Cheering',
-            path = 'public/assets/Shop/GudetamaPack/gudetama-2.jpeg',
+            title = 'Gudetama Bye',
+            path = 'public/assets/Shop/GudetamaPack/gudetama-2.png',
             price = 10
         )
         items.append(i1)
         i2 = Item(
-            title = 'Gudetama Laying',
+            title = 'Gudetama Sleeping',
             path = 'public/assets/Shop/GudetamaPack/gudetama-3.png',
             price = 10
         )

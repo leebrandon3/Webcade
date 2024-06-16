@@ -1,14 +1,22 @@
 import { useRef, useState } from 'react';
-import { Link } from "react-router-dom"
+import { Link, useOutletContext, Navigate } from "react-router-dom"
 
 function Game()
 {
+    const [currentUser, setCurrentUser] = useOutletContext()
+    function ReRoute () {
+        if(currentUser == null) {
+            alert('Please sign in!')
+            return (<Navigate to='/' />)
+            
+        }
+    }
 
     return (
         <>
+            <ReRoute />
             <h3>Select a Game!</h3>
             <div id="game">
-                {/* TODO Find a way to map through all the games rather than listing them all one at a time */}
                 <Link to={'/testgame'}>
                     <div>
                         <h5>Test Game</h5>

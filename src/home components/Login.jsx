@@ -71,8 +71,8 @@ export default function Login ({user, setCurrentUser}) {
         }
 
         return (
-            <>
-                <div>
+            <div className="loginContainer">
+                <div className="login">
                     <h3>Login!</h3>
                     <form onSubmit={signInSubmit}>
                         <label htmlFor="username">Username: </label>
@@ -96,8 +96,7 @@ export default function Login ({user, setCurrentUser}) {
                         />
                     </form>
                 </div>
-                <br />
-                <div>
+                <div className="signup">
                     <h3>New? Sign up here!</h3>
                     <form onSubmit={signUpSubmit}>
                         <label htmlFor="username">Username: </label>
@@ -129,7 +128,7 @@ export default function Login ({user, setCurrentUser}) {
                         />
                     </form>
                 </div>
-            </>
+            </div>
         )
     }
 }

@@ -9,20 +9,25 @@ function App(){
 
     return (
         <div className='container'>
-            <h1 className="grid-col-span-3 title">WEBCADE</h1>
-            <Navbar className='nav-component'/>
+            {/* <h1 className="grid-col-span-3 title">WEBCADE</h1> */}
+            <Navbar className='nav-component' currentUser={currentUser}/>
             <div className='arcade-machine'>
                 <div className='shadow'>
                 </div>
                 <div className='top'>
                     <div className='stripes'>
                     </div>
+                    <h1 className="title halo">webcade</h1>
                 </div>
                 <div className='screen-container'>
                     <div className='shadow'>
                     </div>
                     <div className='screen'>
-                        <Outlet context={[currentUser, setCurrentUser]} className='screen-display'/>
+                        <div className="screen-display">
+                        </div>
+                        <div className="content">
+                            <Outlet context={[currentUser, setCurrentUser]}/>
+                        </div>
                     </div>
                     <div className='joystick'>
                         <div className='stick'>

@@ -84,15 +84,15 @@ def logout():
     session.pop('user_id')
     return {}, 204
 
-######################### SCORE ############################
+######################### POINTS ############################
 
-# Update users scores
-@app.patch('/api/score')
+# Update users points
+@app.patch('/api/points')
 def post_score():
     user = User.query.where(User.id == session.get('user_id')).first()
     if user:
         if request.json.get('points'):
-            setattr(user, 'points', user.points + request.json.get('points'))
+            setattr(user, 'points', request.json.get('points'))
             db.session.add(user)
             db.session.commit()
             return user.to_dict(), 201
@@ -134,6 +134,8 @@ def purchase_item():
             return purchased_item.to_dict(), 201
         else:
             return {'error': 'Already Purchased!'}, 400
+
+######################### INVENTORY ############################
 
 # Get all users items
 @app.get('/api/purchase')
