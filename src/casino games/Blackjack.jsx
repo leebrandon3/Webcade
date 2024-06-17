@@ -16,7 +16,6 @@ function Blackjack() {
         .then(res => res.json())
         .then(data => {
             points = data.points
-            // console.log(points)
         })
 
         if (gameRef.current) {
@@ -31,7 +30,7 @@ function Blackjack() {
             }
 
             create () {
-                const startGame = this.add.text(250, 300, 'Start Game? Min 10 point buy-in.')
+                const startGame = this.add.text(250, 300, 'Start Game? Min 10 coin buy-in.')
                 .setInteractive()
                 .on('pointerdown', () => {
                     // buy in fetch request

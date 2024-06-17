@@ -16,4 +16,6 @@ To get the project to a starting point utilizing react and phaser 3 I utilized t
 
 ### CSS
 
-The CSS of the Arcade Cabinet was created by a developer named Jhonny Gil The link to the webpage can be found **[here](https://codepen.io/gilsjhonny/pen/xqjKzg)**
+The CSS of the Arcade Cabinet was created by a developer named Jhonny Gil. The link to the webpage can be found **[here](https://codepen.io/gilsjhonny/pen/xqjKzg)**
+
+The Sidebar button were inspired by a developer named Jemware. The link to the the webpage can be found **[here](https://codepen.io/jemware/pen/kPoYbe)**

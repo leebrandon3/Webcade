@@ -7,13 +7,9 @@ function Home(){
 
     const [currentUser, setCurrentUser] = useOutletContext();
 
-    // useEffect(() => {
-
-    // }, [currentUser.points])
-
     return (
         <div>
-            <h1>Welcome {currentUser ? `${currentUser.username}!` : 'to WEBCADE!'}</h1>
+            <h1 className="white">Welcome {currentUser ? `${currentUser.username}!` : 'to WEBCADE!'}</h1>
             <SignedIn user={currentUser} setCurrentUser={setCurrentUser}/>
             <Login user={currentUser} setCurrentUser={setCurrentUser}/>
         </div>

@@ -18,10 +18,11 @@ function Casino() {
     return (
         <>
             <ReRoute />
-            <h3>Casino!</h3>
-            <div id="casino">
-                <Link to={'/blackjack'}>
+            <h3 className='white'>Welcome to the Casino!</h3>
+            <div className='selectGame'>
+                <Link to={'/blackjack'} className='game'>
                     <div>
+                        <img className='gameImage' src='../public/assets/gameImages/blackjackimg.png' />
                         <h5>Blackjack</h5>
                     </div>
                 </Link>

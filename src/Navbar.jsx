@@ -6,21 +6,31 @@ function Navbar() {
 
     return (
         <div className="sidebar">
-            <NavLink to='/' exact='true' activeclassname='active' className="link">
-                <h3>Home</h3>
-            </NavLink>
-            <NavLink to='/game' activeclassname='active' className="link">
-                <h3>Game</h3>
-            </NavLink>
-            <NavLink to='/casino' activeclassname='active' className="link">
-                <h3>Casino</h3>
-            </NavLink>
-            <NavLink to='/shop' activeclassname='active' className="link">
-                <h3>Point Shop</h3>
-            </NavLink>
-            <NavLink to='/inventory' activeclassname='active' className="link">
-                <h3>Inventory</h3>
-            </NavLink>
+            <div className="button">
+                <NavLink to='/' exact='true' activeclassname='active' className="link">
+                </NavLink>
+                <h3 className="oswald">Home</h3>
+            </div>
+            <div className="button">
+                <NavLink to='/game' activeclassname='active' className="link">
+                </NavLink>
+                <h3 className="oswald">Game</h3>
+            </div>
+            <div className="button">
+                <NavLink to='/casino' activeclassname='active' className="link">
+                </NavLink>
+                <h3 className="oswald">Casino</h3>
+            </div>
+            <div className="button">
+                <NavLink to='/shop' activeclassname='active' className="link">
+                </NavLink>
+                <h3 className="oswald">Point Shop</h3>
+            </div>
+            <div className="button">
+                <NavLink to='/inventory' activeclassname='active' className="link">
+                </NavLink>
+                <h3 className="oswald">Inventory</h3>
+            </div>
             {/* TODO add links to socials (Linkedin, Github, etc.) */}
         </div>
     )

@@ -22,11 +22,13 @@ export default function ItemCard ({item}) {
     }
 
     return (
-        <div>
-            <img src={item.path} alt={item.title}/>
+        <div className="item">
+            <img src={item.path} alt={item.title} className="itemImage grid-span-2"/>
             <h5>{item.title}</h5>
-            <p>{item.price}</p>
-            <button onClick={handleClick}>Buy</button>
+            <button onClick={handleClick}>
+                <img className='coin' src="../public/assets/CSS/coin.png" alt="coin"/>
+                {`x${item.price}`}
+            </button>
         </div>
     )
 }

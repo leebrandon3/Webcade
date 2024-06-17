@@ -1,10 +1,10 @@
 import { useEffect,useState } from "react"
-import ItemCard from "./ItemCard"
 import { useOutletContext, Navigate } from "react-router-dom"
+import SetCard from "./SetCard"
 
 function Shop() {
 
-    const [items, setItems] = useState([])
+    const [sets, setSets] = useState([])
     const [currentUser, setCurrentUser] = useOutletContext()
     function ReRoute () {
         if(currentUser == null) {
@@ -15,18 +15,18 @@ function Shop() {
     }
 
     useEffect(() => {
-        fetch('api/items')
+        fetch('api/sets')
         .then(res => res.json())
         .then(data => {
             console.log(data)
-            setItems(data)
+            setSets(data)
         })
     }, [])
 
     return (
         <>
             <ReRoute />
-            {items.map(item => <ItemCard key={item.id} item={item}/>)}
+            {sets.map(set => <SetCard key={set.id} set={set}/>)}
         </>
     )
 }

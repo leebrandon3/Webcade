@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 
 function FlappyBird() { 
 
-    // TODO add start game logic
     const gameRef = useRef(null)
 
     useEffect(() => {
@@ -122,6 +121,26 @@ function FlappyBird() {
                         }
                         else {
                             alert("Not logged in!")
+                        }
+                    })
+
+                    fetch('/api/score', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            'game': 'flappybird',
+                            'score': this.scoreValue
+                        })
+                    })
+                    .then(res => {
+                        if (res.ok) {
+                            res.json()
+                            .then(data => {
+                                console.log('Saved new score onto database!')
+                            })
                         }
                     })
 

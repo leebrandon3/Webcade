@@ -23,10 +23,10 @@ function Inventory() {
     }, [])
 
     return (
-        <>
+        <div className="set">
             <ReRoute />
             {purchases.map(purchasedItem => <PurchasedCard key={purchasedItem.id} purchasedItem={purchasedItem}/>)}
-        </>
+        </div>
     )
 }
 
