@@ -57,7 +57,8 @@ body {
 //--------------------------------
 
 .arcade-machine {
-  @include size(1500px, 1500px);
+  // @include size(1500px, 2000px);
+  @include size(120vh, 80vw);
   position: relative;
   margin: 35px auto;
   perspective: 35em;
@@ -72,13 +73,19 @@ body {
     &:after {
       @include size(100%, 4%);
       position: absolute;
-      top: -9%;
+      top: -2%;
       background: white;
       border: $border-size solid $border-color;
       content: ' ';
     }
-    &:before { left: -6%; }
-    &:after { right: -6%; }
+    &:before { left: -5%; }
+    &:after { right: -5%; }
+  }
+
+  // CUSTOM CSS
+  .title {
+    @include position(0%, 28%);
+    z-index: 50;
   }
   
   .stripes {
@@ -104,7 +111,7 @@ body {
   
   &>.shadow {
     @include size(85%, 65%);
-    @include position(2%, 19%);
+    @include position(2%, 18%);
     background: darken($screen-container-color,0%);
     box-shadow: 0 0 60px $screen-container-color;
     z-index:-1;
@@ -121,37 +128,40 @@ body {
     &:after {
       @include size(100%, 4%);
       position: absolute;
-      top: -2%;
+      top: -0.7%;
       background: white;
       content: ' ';
       border: $border-size solid $border-color;
       z-index: 2;
     }
-    &:before { left: -6%; }
-    &:after { right: -6%; }
+    &:before { left: -5%; }
+    &:after { right: -5%; }
     
     .shadow {
-      @include size(8%,110%);
+      @include size(5%,110%);
       @include position(0%, -5%);
       background: $screen-container-shadow-color;
       z-index: 4;
     }
     
     .screen {
-      @include size(70%,75%);
-      @include position(15%, 11%);
+      ///////////////////// customized screen size ////////////////////////////////
+      // @include size(70%,75%);
+      @include size(90%,95%);
+      // @include position(15%, 11%);
+      @include position(5%, 2%);
       background: $screen-color;
       border: $border-size solid $border-color;
       border-radius: 90px 93px 93px 93px / 15px 15px 15px 15px;
       // overflow: hidden;
       // Custom code
-      overflow-y: auto;
+      overflow-y: hidden;
       text-align: center;
       
       &-display {
         position: absolute;
         width: 100%;
-        height: 200%;
+        height: 100%;
         background-image: repeating-linear-gradient(
           0deg,
           $screen-color,
@@ -159,7 +169,7 @@ body {
           lighten($screen-color,10%) 15px,
           lighten($screen-color,10%) 16px /* determines size */
         );
-        animation: translate 1s infinite;
+        animation: translate 1s linear infinite;
       }
       
       h2 {
@@ -168,10 +178,35 @@ body {
         color: $screen-font-color;
         font-family: $screen-title-font, sans-serif;
       }
+
+      .content {
+        position: absolute;
+        @include size(100%,100%);
+        overflow-y: auto;
+
+        .loginContainer {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          place-items: center;
+          @include size(100%,100%);
+          @include position(0%, 0%);
+      
+          > div {
+              background-color: #c7eeff;
+              width: 15vw;
+              height: 30vh;
+              border-radius: 10px
+          }
+      
+          // .login {
+          
+          // }
+      }
+      }
     }
     
     .joystick {
-      @include size(6%, 5%);
+      @include size(7%, 5%);
       background: $joystick-color;
       position: absolute;
       top: 91%;
@@ -210,13 +245,13 @@ body {
 } //End Screen Container
   
   .board {
-    @include size(20%, 66%);
-    @include position(61%, 18.2%);
+    @include size(15%, 74%);
+    @include position(63.5%, 13.2%);
     background: $screen-container-color;
     transform: rotateX(70deg);
     &:before,
     &:after {
-      @include size(92%, 4%);
+      @include size(99%, 4.5%);
       position: absolute;
       top: -2%;
       background: white;
@@ -224,8 +259,8 @@ body {
       border: $border-size solid $border-color;
       z-index: 2;
     }
-    &:before { left: -6%; }
-    &:after { right: -6%; }
+    &:before { left: -5%; }
+    &:after { right: -5%; }
     
     .button {
       @include size(15%, 6%);
@@ -251,130 +286,25 @@ body {
   }
   
   .bottom {
-    @include size(10%, 71%);
-    @include position(76%, 14.5%);
+    @include size(10%, 91.3%);
+    @include position(78.8%, 4.3%);
     background: white;
     border: $border-size solid $border-color;
     &:before,
     &:after {
-      @include size(98%, 4%);
+      @include size(100%, 4.5%);
       position: absolute;
-      top: -9%;
+      top: -2%;
       background: white;
       content: ' ';
       border: $border-size solid $border-color;
       z-index: 2;
     }
-    &:before { left: -5.8%; }
-    &:after { right: -5.9%; }
+    &:before { left: -5%; }
+    &:after { right: -5%; }
   }
   
 } 
-
-
-//--------------------------------
-// Alien
-//--------------------------------
-
-.alien-container {
-  position: absolute;
-  top: 20%;
-  left: 35%;
-  height: 30%;
-  width: 30%;
-  animation: bounce .8s infinite;
-}
-
-.alien {
-  
-  .ear {
-    position: absolute;
-    top: 14%;
-    height: 13%;
-    width: 10%;
-    background: $alien-skin;
-    &-left { left: 35%; }
-    &-right { right: 35%; }
-    &:before {
-      position: absolute;
-      top: -100%;
-      height: 100%;
-      width: 100%;
-      background: $alien-skin;
-      content: '';
-    }
-    &-left:before { left: -100%; }
-    &-right:before { right: -100%;}
-  }
-  
-  .head-top {
-    position: absolute;
-    top: 26%;
-    left: 20%;
-    height: 15%;
-    width: 60%;
-    background: $alien-skin;
-  }
-  
-  .head {
-    position: absolute;
-    top: 40%;
-    left: 11.5%;
-    height: 15%;
-    width: 77%;
-    background: $alien-skin;
-    .eye {
-      position: absolute;
-      top: -5%;
-      height: 77%;
-      width: 12%;
-      background: $alien-eyes;
-      &-left {left: 25%; }
-      &-right {right: 25%; }
-    }
-  }
-  
-  .body {
-    position: absolute;
-    top: 54%;
-    left: 10%;
-    height: 20%;
-    width: 80%;
-    background: $alien-skin;
-    
-    &:before,
-    &:after {
-      height: 220%;
-      width: 13%;
-      background: $alien-skin;
-      position: absolute;
-      content: '';
-    }
-    &:before { left: -10%; }
-    &:after { right: -10%; }
-  }
-  
-  .arm {
-    position: absolute;
-    top: 85%;
-    height: 13%;
-    width: 10%;
-    background: $alien-skin;
-    &-left { left: 35%; }
-    &-right { right: 35%; }
-    &:before {
-      position: absolute;
-      top: -100%;
-      height: 100%;
-      width: 100%;
-      background: $alien-skin;
-      content: '';
-    }
-    &-left:before { left: -100%; }
-    &-right:before { right: -100%;}
-  }
-  
-}
 
 //--------------------------------
 // Footer
@@ -427,25 +357,25 @@ footer {
     top: 0;
   }
   to {
-    top: 10%;
+    top: 5%;
   }
 }
 
 // Media queries
-@media (max-width: $breakpoint-large){
-  .arcade-machine {
-    @include size(1500px, 1500px)
-  }
-}
+// @media (max-width: $breakpoint-large){
+//   .arcade-machine {
+//     @include size(1500px, 1500px)
+//   }
+// }
 
-@media (max-width: $breakpoint-medium){
-  .arcade-machine {
-    @include size(1000px, 1000px)
-  }
-}
+// @media (max-width: $breakpoint-medium){
+//   .arcade-machine {
+//     @include size(1000px, 1000px)
+//   }
+// }
 
-@media (max-width: $breakpoint-small){
-  .arcade-machine {
-    @include size(500px, 500px)
-  }
-}
+// @media (max-width: $breakpoint-small){
+//   .arcade-machine {
+//     @include size(500px, 500px)
+//   }
+// }

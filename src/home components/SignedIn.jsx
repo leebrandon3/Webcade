@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 export default function SignedIn ({user, setCurrentUser}) {
 
-    const [points, setPoints] = useState(0)
+    const [points, setPoints] = useState(-10000)
 
     useEffect(() => {
         fetch('/api/check-session')
@@ -16,7 +16,7 @@ export default function SignedIn ({user, setCurrentUser}) {
             }
         })
 
-    }, [])
+    })
 
     function handleLogOut () {
         setCurrentUser(null)
@@ -28,7 +28,7 @@ export default function SignedIn ({user, setCurrentUser}) {
     if(user) {
         return (
             <>
-                <h4>You have {points} points!</h4>
+                <h4 className="white">You have {points} coins!</h4>
                 <button onClick={handleLogOut}>Log out</button>
             </>
         )

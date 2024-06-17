@@ -7,16 +7,51 @@ function FlappyBird() {
 
     useEffect(() => {
 
+        let points = 0
+
+        fetch('/api/check-session')
+        .then(res => res.json())
+        .then(data => {
+            points = data.points
+        })
+
         if (gameRef.current) {
             return
         }
 
-        class Scene extends Phaser.Scene {
+        class StartGame extends Phaser.Scene {
+            constructor () {
+                super('startgame')
+            }
+
+            preload () {
+                this.load.image('background', 'assets/FlappyBird/background-day.png')
+            }
+
+            create () {
+                this.background = this.add.tileSprite(144, 256, 288, 512, 'background')
+                const play = this.add.text(50, 256, 'Press space to jump!')
+                this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+            }
+
+            update () {
+                this.background.tilePositionX +=0.5
+                if (this.spaceKey.isDown) {
+                    this.scene.start('flappybird')
+                }
+            }
+        }
+
+        class FlappyBird extends Phaser.Scene {
             background
             bird
             pipe
             scoreValue
             pauseValue = false
+
+            constructor () {
+                super('flappybird')
+            }
         
             preload () {
                 this.load.image('bird', 'assets/FlappyBird/yellowbird-midflap.png')
@@ -67,25 +102,45 @@ function FlappyBird() {
                     this.gameover.setTint("0x000000")
                     const restart = this.add.sprite(144, 300, 'restart').setInteractive()
 
-                    fetch('/api/score', {
+                    fetch('/api/points', {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json'
                         },
                         body: JSON.stringify({
-                            'points': this.scoreValue
+                            'points': this.scoreValue + points
                         })
                     })
                     .then(res => {
                         if (res.ok){
                             res.json()
                             .then(data => {
-                                console.log(`${this.scoreValue} added!`)
+                                console.log(`${this.scoreValue} added! Original: ${points}, New: ${data.points}`)
                             })
                         }
                         else {
                             alert("Not logged in!")
+                        }
+                    })
+
+                    fetch('/api/score', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            'game': 'flappybird',
+                            'score': this.scoreValue
+                        })
+                    })
+                    .then(res => {
+                        if (res.ok) {
+                            res.json()
+                            .then(data => {
+                                console.log('Saved new score onto database!')
+                            })
                         }
                     })
 
@@ -163,7 +218,7 @@ function FlappyBird() {
             // height: 1024,
             scale: {
                 mode: Phaser.Scale.FIT,
-                autoCenter: Phaser.Scale.CENTER_BOTH
+                autoCenter: Phaser.Scale.CENTER_VERTICALLY
             },
             physics: {
                 default: 'arcade',
@@ -173,7 +228,7 @@ function FlappyBird() {
                     debug: false
                 }
             },
-            scene: Scene,
+            scene: [StartGame, FlappyBird],
             parent: "flappy-bird"
         }
     

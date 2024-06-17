@@ -4,9 +4,9 @@ from flask import Flask, request, jsonify, session, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
-from sqlalchemy import and_
+from sqlalchemy import and_, func
 
-from models import db, User, Item, Purchase
+from models import db, User, Item, Purchase, Score, Set
 
 from dotenv import load_dotenv
 
@@ -53,7 +53,7 @@ def create_user():
         new_user._hashed_password = bcrypt.generate_password_hash(request.json['password']).decode('utf=8')
         db.session.add(new_user)
         db.session.commit()
-        session['user-id'] = new_user.id
+        session['user_id'] = new_user.id
         return new_user.to_dict(), 201
     except Exception as e:
         return {'error': str(e)}, 406
@@ -84,28 +84,55 @@ def logout():
     session.pop('user_id')
     return {}, 204
 
-######################### SCORE ############################
+######################### POINTS ############################
 
-# Update users scores
-@app.patch('/api/score')
-def post_score():
+# Update users points
+@app.patch('/api/points')
+def udpate_points():
     user = User.query.where(User.id == session.get('user_id')).first()
     if user:
         if request.json.get('points'):
-            setattr(user, 'points', user.points + request.json.get('points'))
+            setattr(user, 'points', request.json.get('points'))
             db.session.add(user)
             db.session.commit()
             return user.to_dict(), 201
     else:
         return {}, 204
 
+######################### SCORES ############################
+
+# Post new score
+@app.post('/api/score')
+def post_score():
+    user = User.query.where(User.id == session.get('user_id')).first()
+    if user:
+        new_score = Score(
+            game = request.json.get('game'),
+            score = request.json.get('score'),
+            user_id = user.id
+        )
+        if new_score:
+            db.session.add(new_score)
+            db.session.commit()
+            return new_score.to_dict(), 201
+        else:
+            return {'error': 'Could not post new score'}, 404
+    else:
+        return {'error': 'User not found'}, 404
+
+# Get all scores
+@app.get('/api/score')
+def get_all_scores():
+    scores = Score.query.all()
+    return [score.to_dict() for score in scores], 200
+
 ######################### ITEMS ############################
 
-# get all items
-@app.get('/api/items')
-def get_all_items():
-    all_items = Item.query.all()
-    return [item.to_dict() for item in all_items], 200
+# Get Shop sets
+@app.get('/api/sets')
+def get_all_sets():
+    all_sets = Set.query.all()
+    return [set.to_dict() for set in all_sets], 200
 
 # Purchase item
 @app.post('/api/purchase')
@@ -134,6 +161,17 @@ def purchase_item():
             return purchased_item.to_dict(), 201
         else:
             return {'error': 'Already Purchased!'}, 400
+
+######################### INVENTORY ############################
+
+# Get Inventory Sets
+# TODO Add sets in inventory
+# @app.get('/api/sets')
+# def get_all_sets():
+#     all_sets = Set.query.where(
+#             Set.
+#         ).all()
+#     return [set.to_dict() for set in all_sets], 200
 
 # Get all users items
 @app.get('/api/purchase')
