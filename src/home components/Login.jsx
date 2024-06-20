@@ -11,7 +11,7 @@ export default function Login ({user, setCurrentUser}) {
         const [signUpData, setSignUpData] = useState({
             "username": "",
             "password": "",
-            "age": 0
+            "age": ''
         })
     
         function handleSignIn(event) {
@@ -72,60 +72,73 @@ export default function Login ({user, setCurrentUser}) {
 
         return (
             <div className="loginContainer">
-                <div className="login">
+                <div className="form">
                     <h3>Login!</h3>
                     <form onSubmit={signInSubmit}>
-                        <label htmlFor="username">Username: </label>
+                        {/* <label htmlFor="username">Username: </label> */}
                         <input 
                             type="text" 
                             name="username" 
                             value={signInData.username} 
                             onChange={handleSignIn}
+                            placeholder="Enter your username"
+                            className="userText"
                         />
-                        <br />
-                        <label htmlFor="password">Password: </label>
+                        {/* <label htmlFor="password">Password: </label> */}
                         <input 
                             type="password" 
                             name="password" 
                             value={signInData.password} 
                             onChange={handleSignIn} 
+                            placeholder="Enter your password"
+                            className="userText"
                         />
-                        <input 
-                            type='submit' 
-                            value='Sign in'
-                        />
+                        <div className="signinbutton">
+                            <input 
+                                type='submit' 
+                                value='Sign in'
+                                // className="signinbutton"
+                            />
+                        </div>
                     </form>
                 </div>
-                <div className="signup">
+                <div className="form">
                     <h3>New? Sign up here!</h3>
                     <form onSubmit={signUpSubmit}>
-                        <label htmlFor="username">Username: </label>
+                        {/* <label htmlFor="username">Username: </label> */}
                         <input 
                             type="text" 
                             name="username" 
                             value={signUpData.username} 
                             onChange={handleSignUp}
+                            placeholder="Create a username"
+                            className="userText"
                         />
-                        <br />
-                        <label htmlFor="password">Password: </label>
+                        {/* <label htmlFor="password">Password: </label> */}
                         <input 
                             type="password" 
                             name="password" 
                             value={signUpData.password} 
                             onChange={handleSignUp} 
+                            placeholder="Create a password"
+                            className="userText"
                         />
-                        <br />
-                        <label htmlFor="age">Age: </label>
-                        <input
-                            type="number"
-                            name="age"
-                            value={signUpData.age}
-                            onChange={handleSignUp} 
-                        />
-                        <input 
-                            type='submit' 
-                            value='Sign up'
-                        />
+                        <div className="age">
+                            {/* <label htmlFor="age">Age: </label> */}
+                            <input
+                                type="number"
+                                name="age"
+                                value={signUpData.age}
+                                onChange={handleSignUp} 
+                                className="userAge"
+                                placeholder="Age"
+                                min='1'
+                            />
+                            <input 
+                                type='submit' 
+                                value='Sign up'
+                            />
+                        </div>
                     </form>
                 </div>
             </div>

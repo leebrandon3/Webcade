@@ -33,37 +33,24 @@ $sidebar-active-background: #68A691;
 }
 
 .sidebar {
-    // TODO Make it prettier
-    // width: $sidebar-width;
-    height: 100vh; /* Full height */
-    // background-color: $sidebar-background;
+    height: 100vh;
     color: $sidebar-text-color;
     position: fixed;
     top: 0;
     left: 0;
-    // display: flex;
-    // flex-direction: column;
     padding: 20px;
     gap: 10px;
     z-index: 100;
 
-    // > .link{
-    //     color: $sidebar-text-color;
-    //     text-decoration: none;
-    //     display: block;
-    //     padding: 3px;
-    //     padding-left: 15px;
-    //     border-radius: 4px;
-        
-    //     &:hover {
-    //         background-color: $sidebar-hover-background;
-    //     }
-        
-    //     &.active {
-    //         background-color: $sidebar-active-background;
-    //     }
-    // }
-    // TODO Make CSS for the items
+    .socials {
+        position: fixed;
+        bottom: 20px;
+        img {
+            height: 100%;
+            width: 40px;
+        }
+    }
+
     // Video game button style sidebar
     .button{
         position:relative;
@@ -117,7 +104,7 @@ $sidebar-active-background: #68A691;
     .button:after{
         content:"";
         height:80%;
-        width:250px;
+        width:220px;
         padding:4px;
         position: absolute;
         bottom:-2px;
@@ -145,30 +132,68 @@ $sidebar-active-background: #68A691;
 }
 
 .selectGame {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     row-gap: 10px;
     column-gap: 10px;
 
     .game {
         background-color: rgba(255, 255, 255, 0.516);
         border-radius: 5px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+        text-shadow: 
+            -1px -1px 0 #000,  
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;
+        .game-info {
+            h3 {
+                grid-column: span 3;
+            }
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            width: 100%;
+            justify-items: center;
+            align-items: center;
+
+            .score-div {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .divider {
+                height: 80%;
+                border-left: 2px solid black;
+                right: 1px;
+                
+            }
+        }
     }
 }
 
 .gameImage {
-    width: 500px;
+    width: 300px;
     height: auto;
 }
 
 .itemImage {
-    width: 250px;
+    width: 150px;
     height: auto;
 }
 
+.set-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+}
 .set {
     display: flex;
-    background-color: #68A691;
+    // background-color: #68A691;
     column-gap: 50px;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -177,13 +202,84 @@ $sidebar-active-background: #68A691;
 .item {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
+    align-items: center;
+    justify-items: center;
+    color: white;
+    h5 {
+        font-size: 15px;
+    }
+    .coin-button {
+        width: 75px;
+        height: 50px;
+        .coin {
+            width: 30px;
+            height: auto;
+        }
+    }
 }
 
 .grid-span-2 {
     grid-column: span 2;
 }
 
-.coin {
-    width: 30px;
-    height: auto;
+
+body {
+    font-family: "Oswald", sans-serif;
+}
+
+.loginContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+
+    .form{
+        width: 15vw;
+        height: 30vh;
+        background-color: #c7eeff;
+        border-radius: 10px;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .signinbutton {
+                // align-self: self-end;
+                // margin-right: 25px;
+                // padding: ;
+                width: 200px;
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            input {
+                height: 35px;
+                // padding: 0 15px;
+                margin-bottom: 1rem;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                outline: none;
+            }
+            .age {
+            
+                display: flex;
+                align-items: center;
+                padding-bottom: 10px;
+                // padding-left: 10px;
+                justify-content: space-between;
+                width: 200px;
+            
+                .userAge{
+                    width: 30%;
+                    // margin-bottom: 0px;
+                }
+            }
+        
+            .userText{
+                width: 200px;
+
+            }
+        }
+    }
 }

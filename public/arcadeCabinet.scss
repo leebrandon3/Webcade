@@ -73,7 +73,7 @@ body {
     &:after {
       @include size(100%, 4%);
       position: absolute;
-      top: -2%;
+      top: -3%;
       background: white;
       border: $border-size solid $border-color;
       content: ' ';
@@ -183,33 +183,14 @@ body {
         position: absolute;
         @include size(100%,100%);
         overflow-y: auto;
-
-        .loginContainer {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          place-items: center;
-          @include size(100%,100%);
-          @include position(0%, 0%);
-      
-          > div {
-              background-color: #c7eeff;
-              width: 15vw;
-              height: 30vh;
-              border-radius: 10px
-          }
-      
-          // .login {
-          
-          // }
-      }
       }
     }
     
     .joystick {
-      @include size(7%, 5%);
+      @include size(8%, 5%);
       background: $joystick-color;
       position: absolute;
-      top: 91%;
+      top: 89%;
       left: 17%;
       border-radius: 50%;
       border: $border-size solid $border-color;
@@ -245,15 +226,15 @@ body {
 } //End Screen Container
   
   .board {
-    @include size(15%, 74%);
-    @include position(63.5%, 13.2%);
+    @include size(15%, 70.5%);
+    @include position(63%, 15.2%);
     background: $screen-container-color;
     transform: rotateX(70deg);
     &:before,
     &:after {
       @include size(99%, 4.5%);
       position: absolute;
-      top: -2%;
+      top: -5%;
       background: white;
       content: ' ';
       border: $border-size solid $border-color;
@@ -286,15 +267,15 @@ body {
   }
   
   .bottom {
-    @include size(10%, 91.3%);
-    @include position(78.8%, 4.3%);
+    @include size(10%, 81.5%);
+    @include position(76.4%, 9.5%);
     background: white;
     border: $border-size solid $border-color;
     &:before,
     &:after {
-      @include size(100%, 4.5%);
+      @include size(99%, 4.5%);
       position: absolute;
-      top: -2%;
+      top: -1.85%;
       background: white;
       content: ' ';
       border: $border-size solid $border-color;
@@ -305,37 +286,6 @@ body {
   }
   
 } 
-
-//--------------------------------
-// Footer
-//--------------------------------
-
-footer {
-  text-align: center;
-  font-family: 'Quicksand', sans-serif;
-  margin-top: -30px;
-  h3 {
-    color: $copyright-color;
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-    span {
-      color: $copyright-span;
-    }
-  }
-  h4 {
-    color: $dedication-color;
-    font-size: 1rem;
-    margin-bottom: 10px;
-  }
-  p {
-    font-size: .9rem;
-    color: $credits-color;
-    a {
-      color: $credits-a-color;
-      
-    }
-  }
-}
 
 //--------------------------------
 // Animations
@@ -357,7 +307,7 @@ footer {
     top: 0;
   }
   to {
-    top: 5%;
+    top: 6.8%;
   }
 }
 

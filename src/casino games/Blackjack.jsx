@@ -1,12 +1,12 @@
 import Phaser from "phaser"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState,  } from "react"
 import Shuffle from "phaser/src/utils/array/Shuffle.js"
 import { useOutletContext } from "react-router-dom"
 
 function Blackjack() {
 
-    const gameRef = useRef(null)
-    const [restart, setRestart] = useState(0)
+    const gameRef = useRef(null) 
+    const [restartTrigger, setRestartTrigger] = useState(0)
     const [currentUser, setCurrentUser] = useOutletContext()
     let points = 0
 
@@ -38,21 +38,27 @@ function Blackjack() {
                     console.log(points)
                     const newTotal = points - this.betAmount
                     console.log(newTotal)
-                    fetch('/api/points', {
-                        method: "PATCH",
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            'points': (newTotal)
+                    if (newTotal >= 0) {
+                        fetch('/api/points', {
+                            method: "PATCH",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                'points': (newTotal)
+                            })
                         })
-                    })
-                    .then(res => res.json())
-                    .then(data => console.log(data.points))
-                    this.scene.start('blackjack', {
-                        bet: this.betAmount
-                    })
+                        .then(res => res.json())
+                        .then(data => console.log(data.points))
+                        this.scene.start('blackjack', {
+                            bet: this.betAmount,
+                            total: newTotal
+                        })
+                    }
+                    else {
+                        alert ('You do not have enough coins!')
+                    }
                 })
                 
                 const bet = this.add.text(390, 350, this.betAmount)
@@ -90,6 +96,7 @@ function Blackjack() {
             playerValue = 0
             // player pressed stand
             standing = false
+            newTotal
 
             deck = ['AD', '2D', '3D', '4D', '5D', '6D', '7D', '8D', '9D', '0D', 'JD', 'QD', 'KD', 'AC', '2C', '3C', '4C', '5C', '6C', '7C', '8C', '9C', '0C', 'JC', 'QC', 'KC', 'AH', '2H', '3H', '4H', '5H', '6H', '7H', '8H', '9H', '0H', 'JH', 'QH', 'KH', 'AS', '2S', '3S', '4S', '5S', '6S', '7S', '8S', '9S', '0S', 'JS', 'QS', 'KS',
             
@@ -110,6 +117,7 @@ function Blackjack() {
 
             init (data) {
                 this.bet = data.bet
+                this.newTotal = data.total
             }
 
             preload() {
@@ -208,6 +216,8 @@ function Blackjack() {
                     this.stand()
                 })
                 // TODO Add total points in users account display
+                console.log(`coin coin coins ${this.newTotal}`)
+                const accountCoins = this.add.text(580, 100, `Coins Balance: ${this.newTotal}`)
             }
 
             deal(hand, hidden=false) {
@@ -326,10 +336,10 @@ function Blackjack() {
                         body: JSON.stringify({
                             'points': (points)
                         })
-                        .then(res => res.json())
-                        .then(data => {
-                            console.log(`Players Point total is now ${data.points}`)
-                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(`Players Point total is now ${data.points}`)
                     })
                 }
                 else {
@@ -345,16 +355,21 @@ function Blackjack() {
                         body: JSON.stringify({
                             'points': (points + this.bet)
                         })
-                        .then(res => res.json())
-                        .then(data => {
-                            console.log(`Players Point total is now ${data.points}`)
-                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(`Players Point total is now ${data.points}`)
                     })
                 }
                 const restartGame = this.add.text(350, 350, 'Play Again?')
                 .setInteractive()
                 .on('pointerdown', () => {
-                    setRestart(restart + 1)
+                    console.log('play again')
+                    fetch('/api/check-session')
+                    .then(res => res.json())
+                    .then(data => {
+                        setCurrentUser(data)
+        })
                 })
             }
         }
