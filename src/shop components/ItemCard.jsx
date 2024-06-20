@@ -2,6 +2,7 @@ export default function ItemCard ({item, user}) {
 
     async function handleClick() {
         try {
+            console.log(`user points:${user} AND cost: ${item.price}`)
             if (user.points < item.price) {
                 alert('Not enough coins in your account!')
             }

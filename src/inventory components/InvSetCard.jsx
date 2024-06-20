@@ -6,7 +6,7 @@ function InvSetCard({set}) {
         <div>
             <h3 className="white">{`The ${set[0]['item']['set']['name']} Set`}</h3>
             <div className="set">
-                {set.map(purchasedItem => <PurchasedCard key={purchasedItem.id} purchasedItem={purchasedItem}/>)}
+                {set.map(purchasedItem => <PurchasedCard key={set.indexOf(purchasedItem)} purchasedItem={purchasedItem}/>)}
             </div>
         </div>
     )

@@ -1,9 +1,11 @@
 import Phaser from "phaser";
 import { useEffect, useRef } from "react";
+import { useOutletContext } from "react-router-dom";
 
 function FlappyBird() { 
 
     const gameRef = useRef(null)
+    const [currentUser, setCurrentUser] = useOutletContext()
 
     useEffect(() => {
 
@@ -146,9 +148,14 @@ function FlappyBird() {
 
                     restart.on('pointerdown', () => {
                         restart.setTexture('restart-press')
-                        this.scene.restart()
-                        this.pauseValue = false
-                        this.scoreValue = 0
+                        // this.scene.restart()
+                        // this.pauseValue = false
+                        // this.scoreValue = 0
+                        fetch('/api/check-session')
+                        .then(res => res.json())
+                        .then(data => {
+                            setCurrentUser(data)
+                        })
                     })
 
                     restart.on('pointerout', () => {
