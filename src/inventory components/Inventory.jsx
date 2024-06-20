@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import PurchasedCard from "./PurchasedCard";
+import InvSetCard from "./InvSetCard";
 import { useOutletContext, Navigate } from "react-router-dom"
 
 function Inventory() {
-    const [purchases, setPurchases] = useState([])
+    const [sets, setSets] = useState([])
     const [currentUser, setCurrentUser] = useOutletContext()
     function ReRoute () {
         if(currentUser == null) {
@@ -17,15 +17,14 @@ function Inventory() {
         fetch('/api/purchase')
         .then(res => res.json())
         .then(data => {
-            console.log(data)
-            setPurchases(data)
+            setSets(data)
         })
     }, [])
 
     return (
-        <div className="set">
+        <div className="set-container">
             <ReRoute />
-            {purchases.map(purchasedItem => <PurchasedCard key={purchasedItem.id} purchasedItem={purchasedItem}/>)}
+            {sets.map(set => <InvSetCard key={set.id} set={set}/>)}
         </div>
     )
 }

@@ -88,10 +88,13 @@ def logout():
 
 # Update users points
 @app.patch('/api/points')
-def udpate_points():
+def update_points():
     user = User.query.where(User.id == session.get('user_id')).first()
     if user:
-        if request.json.get('points'):
+        if request.json.get('points') != None:
+            print("------------------------------------------------------------------")
+            print(request.json.get('points'))
+            print("------------------------------------------------------------------")
             setattr(user, 'points', request.json.get('points'))
             db.session.add(user)
             db.session.commit()
@@ -164,21 +167,28 @@ def purchase_item():
 
 ######################### INVENTORY ############################
 
-# Get Inventory Sets
-# TODO Add sets in inventory
-# @app.get('/api/sets')
-# def get_all_sets():
-#     all_sets = Set.query.where(
-#             Set.
-#         ).all()
-#     return [set.to_dict() for set in all_sets], 200
-
 # Get all users items
 @app.get('/api/purchase')
 def get_all_users_items():
     user = User.query.where(User.id == session.get('user_id')).first()
     if user:
-        return [item.to_dict() for item in Purchase.query.where(Purchase.user_id == session.get('user_id'))], 200
+        itemList = [item.to_dict() for item in Purchase.query.where(Purchase.user_id == session.get('user_id'))]
+        itemList.sort(key=lambda item: item['item']['set']['id'])
+        orderedList = [[]]
+        index = 0
+        # print(itemList[0])
+        for i in range(len(itemList)):
+            if i == 0:
+                # print('-----------------------------------------------')
+                orderedList[0].append(itemList[0])
+            else:
+                # print(orderedList[index][0])
+                if orderedList[index][0]['item']['set']['id'] == itemList[i]['item']['set']['id']:
+                    orderedList[index].append(itemList[i])
+                else:
+                    index = index + 1
+                    orderedList.append([itemList[i]])
+        return orderedList, 200
 
 if __name__ == '__main__':
     app.run(port=8080, debug=True)

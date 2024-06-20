@@ -192,7 +192,6 @@ function FlappyBird() {
                     this.pipe.create(350, randY-420, 'pipe').setFlipY(true)
                     const sensor = this.sensor.create(400, randY-210, 'sensor')
                     sensor.setVisible(false)
-                    console.log(randY)
                     this.pipe.setVelocityX(-75)
                     sensor.setVelocityX(-75)
                     sensor.alreadyTriggered = false

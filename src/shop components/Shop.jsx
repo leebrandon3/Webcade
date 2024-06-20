@@ -18,16 +18,15 @@ function Shop() {
         fetch('api/sets')
         .then(res => res.json())
         .then(data => {
-            console.log(data)
             setSets(data)
         })
     }, [])
 
     return (
-        <>
+        <div className="set-container">
             <ReRoute />
-            {sets.map(set => <SetCard key={set.id} set={set}/>)}
-        </>
+            {sets.map(set => <SetCard key={set.id} set={set} user={currentUser}/>)}
+        </div>
     )
 }
 

@@ -21,9 +21,10 @@ function Casino() {
             <h3 className='white'>Welcome to the Casino!</h3>
             <div className='selectGame'>
                 <Link to={'/blackjack'} className='game'>
+                    <img className='gameImage' src='../public/assets/gameImages/blackjackimg.png' />
                     <div>
-                        <img className='gameImage' src='../public/assets/gameImages/blackjackimg.png' />
-                        <h5>Blackjack</h5>
+                        <h3>Blackjack</h3>
+                        <p>Buy in min 10 coins</p>
                     </div>
                 </Link>
             </div>

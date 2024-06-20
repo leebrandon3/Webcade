@@ -29,7 +29,6 @@ function Game()
             let currentGlobalUsername
             flappyBirdScores.forEach(score => {
                 if (score.user_id == currentUser.id){
-                    console.log(currentUserScore, score.score)
                     if (currentUserScore < score.score) {
                         currentUserScore = score.score
                     }
@@ -37,7 +36,6 @@ function Game()
                 if (currentGlobalScore < score.score) {
                     currentGlobalScore = score.score
                     currentGlobalUsername = score.user.username
-                    console.log(score.user.username)
                 }
             })
             setUserScore(currentUserScore)
@@ -54,27 +52,23 @@ function Game()
             <ReRoute />
             <h3 className='white'>Select a Game!</h3>
             <div className='selectGame'>
-                <Link to={'/testgame'} className='game'>
-                    <div>
-                        <h5>Test Game</h5>
-                    </div>
-                </Link>
                 <Link to={'/flappybird'} className='game'>
-                    <div>
-                        <h5>Flappy Bird</h5>
-                        {/* TODO add image of game 
-                        TODO Display high score & users high score*/}
-                        <img className='gameImage' src='../public/assets/gameImages/flappybird.jpg' />
-                        <p>--Global High Score--</p>
-                        <p>{`${globalScore.username}: ${globalScore.score}`}</p>
-                        <p>--Your High Score--</p>
-                        <p>{userScore}</p>
+                    <img className='gameImage' src='../public/assets/gameImages/flappybird.jpg' />
+                    <div className='game-info'>
+                        <h3>Flappy Bird</h3>
+                        <div className='score-div'>
+                            <p>Global High Score</p>
+                            <p>{`${globalScore.username}: ${globalScore.score}`}</p>
+                        </div>
+                        <div className='divider'/>
+                        <div className='score-div'>
+                            <p>Your High Score</p>
+                            <p>{userScore}</p>
+                        </div>
                     </div>
                 </Link>
-                <Link to={'/testarcade'} className='game'>
-                    <div>
-                        <h5>Arcade</h5>
-                    </div>
+                <Link to={'/testgame'} className='game'>
+                    <h5>Test Game</h5>
                 </Link>
             </div>
         </>

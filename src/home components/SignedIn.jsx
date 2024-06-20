@@ -10,7 +10,6 @@ export default function SignedIn ({user, setCurrentUser}) {
             if (res.ok){
                 res.json()
                 .then(data => {
-                    console.log(data)
                     setPoints(data.points)
                 })
             }
