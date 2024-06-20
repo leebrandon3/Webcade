@@ -369,7 +369,7 @@ function Blackjack() {
                     .then(res => res.json())
                     .then(data => {
                         setCurrentUser(data)
-        })
+                    })
                 })
             }
         }

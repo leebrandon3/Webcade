@@ -2,6 +2,7 @@ import { useEffect,useState } from "react"
 import ItemCard from "./ItemCard"
 
 function SetCard({set, user}) {
+    console.log(user)
 
     return (
         <div>

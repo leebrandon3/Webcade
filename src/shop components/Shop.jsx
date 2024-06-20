@@ -20,6 +20,11 @@ function Shop() {
         .then(data => {
             setSets(data)
         })
+        fetch('/api/check-session')
+        .then(res => res.json())
+        .then(data => {
+            setCurrentUser(data)
+        })
     }, [])
 
     return (
