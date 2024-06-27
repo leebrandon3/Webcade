@@ -1,5 +1,7 @@
 # WEBCADE
 
+To access go to **[https://webcade.onrender.com/](https://webcade.onrender.com/)** (during downtimes loading the webpage may take some time!
+
 Welcome to Webcade! This is a full-stack project that allows users to create an account, play arcade games and buy items using points earned in game!
 
 The goal for this site is to provide users the feeling of being in an arcade but on the web, hence the name **Webcade**!
